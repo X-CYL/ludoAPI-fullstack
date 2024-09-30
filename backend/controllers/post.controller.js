@@ -1,6 +1,6 @@
-const { remove } = require("mongoose/lib/model");
-const postModel = require("../models/post.model");
+
 const PostModel = require("../models/post.model");
+
 
 module.exports.getPosts = async (req, res) =>{
     const posts = await PostModel.find();
@@ -68,3 +68,6 @@ module.exports.dislikePost = async (req, res) => {
         res.status (400).json(err)
     }
 }
+
+
+

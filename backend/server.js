@@ -13,11 +13,23 @@ const app = express(); // chaque fois que l'on va appeler app.quelquechose (get,
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With, content-type"
+  );
 
-app.use("/post", require("./routes/post-routes")); 
+  next();
+});
+
+app.use("/post", require("./routes/post-routes"));
+app.use("/user", require("./routes/user-routes"));
 // va chercher la reference de la route post dans le repertoire 'routes' et le fichier 'post.routes.js'
-
 
 // l appli nodemon sert a redemarrer le server a chaque modification automatiqueent
 // ici on demande de lancer le serveur sur le port 5000 en localhost avec la production d'un message le signalant
-app.listen(port, () => console.log('le serveur est démarré sur le port '+ port))
+app.listen(port, () =>
+  console.log("le serveur est démarré sur le port " + port)
+);
